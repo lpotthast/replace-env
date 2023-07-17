@@ -65,22 +65,22 @@ fn get_type_info(ty: &Type) -> TypeInfo {
 }
 
 impl MyFieldReceiver {
-    pub fn raw_type(&self) -> Result<RawType, Error> {
+    pub fn raw_type(&self) -> RawType {
         let TypeInfo { is_option, ident } = get_type_info(&self.ty);
         self.raw_type.clone().map(|raw_type| {
             if raw_type == "String" {
                 match ident.to_string().as_str() {
                     "String" | "u8" | "u16" | "u32" | "u64" | "u128" | "i8" | "i16" | "i32" | "i64" | "i128" | "f32" | "f64" | "bool"
                     =>  abort! {self.ty.span(), "Do not specify `replace_env(raw_type = \"String\")` for primitive types for which 'String' will be the inferred type anyway."; help = "Remove attribute `replace_env(raw_type = \"String\")`"},
-                    _non_primitive_type => Ok(RawType { is_option, ident: raw_type })
+                    _non_primitive_type => RawType { is_option, ident: raw_type }
                 }
             } else {
-                Ok(RawType { is_option, ident: raw_type })
+                RawType { is_option, ident: raw_type }
             }
         }).unwrap_or_else(|| {
             match ident.to_string().as_str() {
                 "String" | "u8" | "u16" | "u32" | "u64" | "u128" | "i8" | "i16" | "i32" | "i64" | "i128" | "f32" | "f64" | "bool"
-                    => Ok(RawType { is_option, ident: Ident::new("String", self.ty.span()) }),
+                    => RawType { is_option, ident: Ident::new("String", self.ty.span()) },
                 other => {
                     let message = format!("Expected a primitive type like `String`, 'u32', ... But got: {other}");
                     abort!(
@@ -144,18 +144,7 @@ pub fn store(input: TokenStream) -> TokenStream {
 
     let fields_with_raw_type = fields
         .into_iter()
-        .map(|field| {
-            let type_info = get_type_info(&field.ty);
-            let raw = field.raw_type();
-            if let Err(err) = raw {
-                abort!(err);
-            }
-            (
-                field,
-                type_info,
-                raw.expect("Must be present. This is a bug."),
-            )
-        })
+        .map(|field| (field, get_type_info(&field.ty), field.raw_type()))
         .collect::<Vec<_>>();
 
     let raw_field_type_declarations =
