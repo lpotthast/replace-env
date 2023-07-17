@@ -6,7 +6,7 @@ use proc_macro::TokenStream;
 use proc_macro2::{Ident, Span};
 use proc_macro_error::{abort, proc_macro_error};
 use quote::quote;
-use syn::{parse_macro_input, spanned::Spanned, DeriveInput, Error, Type};
+use syn::{parse_macro_input, spanned::Spanned, DeriveInput, Type};
 
 struct RawType {
     is_option: bool,
