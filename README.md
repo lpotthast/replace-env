@@ -1,7 +1,8 @@
 # replace-env
 
-TODO: Write this readme.
-TODO: Add tests for proc macro.
-TODO: Finalize Cargo.toml.
-TODO: Release on crates.io.
-Test
+This repository hosts the following crates:
+
+| Crate              | Readme                                        |
+|--------------------|-----------------------------------------------|
+| replace-env        | [README](crates/replace-env/README.md)        |
+| derive-replace-env | [README](crates/derive-replace-env/README.md) |

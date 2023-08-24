@@ -2,7 +2,17 @@
 name = "replace-env"
 version = "0.1.0"
 edition = "2021"
+rust-version = "1.64.0"
+authors = ["Lukas Potthast <privat@lukas-potthast.de>"]
+license = "MIT OR Apache-2.0"
+readme = "README.md"
+repository = "https://github.com/lpotthast/replace-env"
+description = """
+Replace env variables.
+"""
+categories = ["configuration"]
+keywords = ["properties", "app-properties", "configuration", "env"]
 
 [dependencies]
-derive-replace-env = { path = "../derive-replace-env" }
-tracing = "0.1.37"
+derive-replace-env = { workspace = true }
+tracing = "0.1"

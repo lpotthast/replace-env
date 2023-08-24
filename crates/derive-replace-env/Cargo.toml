@@ -1,14 +1,24 @@
 [package]
 name = "derive-replace-env"
-version = "0.0.1"
+version = "0.1.0"
 edition = "2021"
+rust-version = "1.64.0"
+authors = ["Lukas Potthast <privat@lukas-potthast.de>"]
+license = "MIT OR Apache-2.0"
+readme = "README.md"
+repository = "https://github.com/lpotthast/replace-env"
+description = """
+Derive macro providing replacing-env support for supported structs.
+"""
+categories = ["configuration"]
+keywords = ["properties", "app-properties", "configuration", "env"]
 
 [lib]
 proc-macro = true
 
 [dependencies]
-darling = "0.20.3"
-proc-macro-error = "1.0.4"
-proc-macro2 = "1.0.66"
-quote = "1.0.31"
-syn = { version = "2.0.26", features = ["extra-traits"] }
+darling = "0.20"
+proc-macro-error = "1"
+proc-macro2 = "1"
+quote = "1"
+syn = { version = "2", features = ["extra-traits"] }

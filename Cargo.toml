@@ -1,3 +1,7 @@
 [workspace]
 resolver = "2"
 members = ["crates/*"]
+
+[workspace.dependencies]
+replace-env = { path = "./crates/replace-env", version = "0.1.0" }
+derive-replace-env = { path = "./crates/derive-replace-env", version = "0.1.0" }

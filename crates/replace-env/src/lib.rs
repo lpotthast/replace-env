@@ -2,7 +2,6 @@
 #![deny(clippy::unwrap_used)]
 
 pub use derive_replace_env::ReplaceEnv;
-use tracing::warn;
 
 pub struct Metadata {
     pub secret: bool,
@@ -19,12 +18,9 @@ impl ReplaceEnv for String {
     }
 }
 
-impl ReplaceEnv for Option<String> {
-    fn replace_env(mut self, metadata: Metadata) -> Self {
-        if let Some(inner) = &mut self {
-            replace_env_in_string(inner, metadata);
-        }
-        self
+impl<T: ReplaceEnv> ReplaceEnv for Option<T> {
+    fn replace_env(self, metadata: Metadata) -> Self {
+        self.map(|it| it.replace_env(metadata))
     }
 }
 
@@ -46,12 +42,12 @@ fn replace_env_in_string(string: &mut String, metadata: Metadata) {
                 Err(var_error) => {
                     match var_error {
                         std::env::VarError::NotPresent => match metadata.secret {
-                            false => warn!("ENV variable \"{env_name}\" not present. Using default: \"{default_value}\""),
-                            true => warn!("ENV variable \"{env_name}\" not present. Using secret default."),
+                            false => tracing::warn!("ENV variable \"{env_name}\" not present. Using default: \"{default_value}\""),
+                            true => tracing::warn!("ENV variable \"{env_name}\" not present. Using secret default."),
                         },
                         std::env::VarError::NotUnicode(_) => match metadata.secret {
-                            false => warn!("ENV variable \"{env_name}\" doest not contain valid unicode! Using default: \"{default_value}\""),
-                            true => warn!("ENV variable \"{env_name}\" doest not contain valid unicode! Using secret default."),
+                            false => tracing::warn!("ENV variable \"{env_name}\" doest not contain valid unicode! Using default: \"{default_value}\""),
+                            true => tracing::warn!("ENV variable \"{env_name}\" doest not contain valid unicode! Using secret default."),
                         },
                     }
                     let default_string = default_value.to_string();
