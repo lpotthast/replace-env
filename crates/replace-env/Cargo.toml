@@ -16,3 +16,6 @@ keywords = ["properties", "app-properties", "configuration", "env"]
 [dependencies]
 derive-replace-env = { workspace = true }
 tracing = "0.1"
+
+[lints]
+workspace = true
