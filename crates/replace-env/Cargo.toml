@@ -2,7 +2,7 @@
 name = "replace-env"
 version = "0.1.0"
 edition = "2024"
-rust-version = "1.85.0"
+rust-version = "1.88.0"
 authors = ["Lukas Potthast <privat@lukas-potthast.de>"]
 license = "MIT OR Apache-2.0"
 readme = "README.md"
@@ -14,8 +14,8 @@ categories = ["configuration"]
 keywords = ["properties", "app-properties", "configuration", "env"]
 
 [dependencies]
-derive-replace-env = { workspace = true }
-tracing = "0.1"
+derive-replace-env = { workspace = true, default-features = false, features = [] }
+tracing = { version = "0.1.44", default-features = false, features = [] }
 
 [lints]
 workspace = true
