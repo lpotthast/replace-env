@@ -3,8 +3,8 @@ resolver = "2"
 members = ["crates/*"]
 
 [workspace.dependencies]
-replace-env = { path = "./crates/replace-env", version = "0.1.0", default-features = false, features = [] }
 derive-replace-env = { path = "./crates/derive-replace-env", version = "0.1.0", default-features = false, features = [] }
+replace-env = { path = "./crates/replace-env", version = "0.1.0", default-features = false, features = [] }
 
 [workspace.lints.clippy]
 all = { level = "deny", priority = -1 }
